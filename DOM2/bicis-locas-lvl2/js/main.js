@@ -1,6 +1,8 @@
 function validateForm(){
 	/* Escribe tú código aquí */
     
+    remueveErrores();
+    
     var nombre = document.getElementById("name").value;
     var apellido = document.getElementById("lastname").value;
     var mail = document.getElementById("input-email").value;
@@ -13,45 +15,53 @@ function validateForm(){
     
     if(txtNombre!="" || txtNombre2!=""){
         var validacion = document.createElement('span');
+        validacion.setAttribute("class","error");
         validacion.appendChild(document.createTextNode(txtNombre + txtNombre2));
         document.getElementById("name").parentElement.appendChild(validacion);
+        
     }
     
     txtApellido=texto=validaVacio(apellido,"Apellido");
     txtApellido2=texto=validaMayuscula(apellido);
 
     if(txtApellido!="" || txtApellido2!=""){
-        var validacion = document.createElement('span');
-        validacion.appendChild(document.createTextNode(txtApellido + txtApellido2));
-        document.getElementById("lastname").parentElement.appendChild(validacion);
+        var validacion2 = document.createElement('span');
+        validacion2.setAttribute("class","error");
+        msg=document.createTextNode(txtApellido + txtApellido2);
+        validacion2.appendChild(msg);
+        document.getElementById("lastname").parentElement.appendChild(validacion2);
     }
     
     txtEmail=validaVacio(mail,"Email");
     txtEmail2=validaEmail(mail);
     
     if(txtEmail!="" || txtEmail2!=""){
-        var validacion = document.createElement('span');
-        validacion.appendChild(document.createTextNode(txtEmail + txtEmail2));
-        document.getElementById("input-email").parentElement.appendChild(validacion);
+        var validacion3 = document.createElement('span');
+        validacion3.setAttribute("class","error");
+        validacion3.appendChild(document.createTextNode(txtEmail + txtEmail2));
+        document.getElementById("input-email").parentElement.appendChild(validacion3);
     }
     
     txtPassword=validaVacio(password,"Password");
     txtPassword2=validaLongitud(password,6);
         
     if(txtPassword!="" || txtPassword2!=""){
-        var validacion = document.createElement('span');
-        validacion.appendChild(document.createTextNode(txtPassword + txtPassword2));
-        document.getElementById("input-password").parentElement.appendChild(validacion);
+        var validacion4 = document.createElement('span');
+        validacion4.setAttribute("class","error");
+        validacion4.appendChild(document.createTextNode(txtPassword + txtPassword2));
+        document.getElementById("input-password").parentElement.appendChild(validacion4);
     }
     
     txtCombo =validaCombo(bici, "Tipo de Bicicleta");
     if(txtCombo!=""){
-        var validacion = document.createElement('span');
-        validacion.appendChild(document.createTextNode(txtCombo));
-        document.getElementsByTagName("select")[0].parentElement.appendChild(validacion);
+        var validacion5 = document.createElement('span');
+        validacion5.setAttribute("class","error");
+        validacion5.appendChild(document.createTextNode(txtCombo));
+        document.getElementsByTagName("select")[0].parentElement.appendChild(validacion5);
     }
 }
 
+/*********FUNCIONES********/
 function validaVacio(texto,nombre){
     if(texto==null || texto.trim().length==0){
         return nombre + " no puede estar vacio ";
@@ -92,4 +102,11 @@ function validaEmail(email) {
         return "";
     }
     return ' formato no valido';
+}
+
+function remueveErrores(){
+    spans=document.getElementsByClassName("error")
+    while(spans.length>0){
+        spans[0].parentElement.removeChild(spans[0]);
+    }
 }
